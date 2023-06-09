@@ -24,11 +24,11 @@ BLUE2 = (0, 100, 255)
 BLACK = (0,0,0)
 
 BLOCK_SIZE = 20
-SPEED = 40
+SPEED = 200
 
 class SnakeGameAI:
 
-    def __init__(self, w=640, h=480):
+    def __init__(self, w=320, h=240):
         self.w = w
         self.h = h
         # init display
@@ -152,3 +152,30 @@ class SnakeGameAI:
             y -= BLOCK_SIZE
 
         self.head = Point(x, y)
+    
+    def get_field(self):
+        w = self.w // BLOCK_SIZE
+        h = self.h // BLOCK_SIZE
+
+        field = [0] * w * h
+
+        for p in self.snake:
+            x = p.x // BLOCK_SIZE
+            y = p.y // BLOCK_SIZE
+            if 0 <= x < w and 0 <= y < h: 
+                field[int(y * w + x)]=1
+
+        field[self.food.y // BLOCK_SIZE * w + self.food.x // BLOCK_SIZE] = 1
+
+        # line = ""
+        # for p in field:
+        #     line += str(p)
+
+        #     if len(line) == w:
+        #         print(line)
+        #         line = ""
+        
+        # print("")
+
+        return field
+    
